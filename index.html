@@ -129,17 +129,18 @@ main section[id] { scroll-margin-top: 84px; }
 .dine-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
 .dine-head h2 { font-size: clamp(36px, min(7.4vw, 8vh), 120px); }
 .dine-count { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
-.track { display: flex; gap: 20px; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); will-change: transform; width: max-content; }
-.dish { width: clamp(260px, 30vw, 380px); flex: none; background: var(--paper); color: var(--kitchen-ink); border-radius: 6px; padding: 12px 12px 14px; display: flex; flex-direction: column; gap: clamp(6px, 1.2vh, 12px); }
+.track { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto); gap: 14px 16px; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); will-change: transform; width: max-content; }
+.dish { width: clamp(290px, 27vw, 400px); background: var(--paper); color: var(--kitchen-ink); border-radius: 6px; padding: 10px; display: grid; grid-template-columns: clamp(96px, 11vw, 160px) minmax(0, 1fr); grid-auto-rows: min-content; column-gap: 14px; row-gap: clamp(4px, .8vh, 8px); align-content: start; }
+.dish > :not(.dish-img) { grid-column: 2; }
 .dish:nth-child(3n+2) { background: var(--kitchen-ink); color: var(--paper); }
-.dish-img { height: clamp(96px, 24vh, 260px); overflow: hidden; border-radius: 3px; }
+.dish-img { grid-column: 1; grid-row: 1 / span 4; height: 100%; min-height: clamp(110px, 17vh, 170px); overflow: hidden; border-radius: 3px; }
 .dish-img img { transform: scale(1.12); transform-origin: 50% 50%; will-change: transform; }
-.dish-top { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-variant-numeric: tabular-nums; padding-inline: 4px; }
-.dish h3 { font-size: clamp(30px, min(3.8vw, 5.6vh), 58px); padding-inline: 4px; }
-.dish p { font-size: 15px; line-height: 1.5; padding-inline: 4px; }
+.dish-top { display: flex; flex-direction: column; gap: 2px; padding-top: 4px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-variant-numeric: tabular-nums; padding-inline: 4px; }
+.dish h3 { font-size: clamp(26px, min(2.8vw, 4.6vh), 46px); padding-inline: 4px; }
+.dish p { font-size: 14px; line-height: 1.45; padding-inline: 4px; }
 .dish a { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 4px 6px; align-self: flex-start; }
-@media (max-height: 760px) { .dish p { display: none; } }
-@media (max-height: 560px) { .dish-img { display: none; } }
+@media (max-height: 880px), (max-width: 700px) { .dish p { display: none; } }
+
 
 /* Sundown */
 .pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px; }
@@ -686,14 +687,15 @@ main section[id] { scroll-margin-top: 84px; }
         img.style.transform = 'translate3d(' + off.toFixed(1) + 'px,0,0) scale(1.12)';
       });
     }
-    // Count the card whose left edge is nearest the page margin; the last card once the row ends.
-    var n = track.children.length, idx = 1, best = Infinity, aim = track.children[0].offsetLeft;
-    for (var c2 = 0; c2 < n; c2++) {
+    // Cards fill two rows column by column; show the column nearest the page margin, e.g. 03–04 / 09.
+    var n = track.children.length, col = 0, best = Infinity, aim = track.children[0].offsetLeft;
+    for (var c2 = 0; c2 < n; c2 += 2) {
       var d = Math.abs(track.children[c2].getBoundingClientRect().left - aim);
-      if (d < best) { best = d; idx = c2 + 1; }
+      if (d < best) { best = d; col = c2 / 2; }
     }
-    if (dp > 0.985) idx = n;
-    dineCount.textContent = (idx < 10 ? '0' : '') + idx + ' / ' + (n < 10 ? '0' : '') + n;
+    if (dp > 0.985) col = Math.ceil(n / 2) - 1;
+    var a1 = col * 2 + 1, a2 = Math.min(n, a1 + 1), pad = function (v) { return (v < 10 ? '0' : '') + v; };
+    dineCount.textContent = (a1 === a2 ? pad(a1) : pad(a1) + '–' + pad(a2)) + ' / ' + pad(n);
   }
 
   var ticking = false;
