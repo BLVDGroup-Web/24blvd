@@ -125,8 +125,9 @@ main section[id] { scroll-margin-top: 84px; }
 
 /* Kitchens: vertical scroll drives a horizontal track */
 .dine { position: relative; }
-.dine-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(12px, 2.5vh, 28px); padding-block: 76px 64px; box-sizing: border-box; }
-.dine-head { padding-block: 18vh 40px; }
+.dine-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; gap: clamp(12px, 2.5vh, 28px); padding-block: 84px 64px; box-sizing: border-box; }
+.dine-head { padding-block: 18vh 0; }
+.dine-head .chapter-head { margin-bottom: 0; }
 .dine-head .label { display: block; margin-bottom: 18px; }
 .dine-meta { width: 100%; box-sizing: border-box; }
 .dine-head h2 { font-size: clamp(64px, 10vw, 156px); }
@@ -346,7 +347,10 @@ main section[id] { scroll-margin-top: 84px; }
 
   <section id="dine" class="dine" data-t="12" data-bg="--kitchen" data-fg="--kitchen-ink" data-name="Lunch &amp; dinner">
     <div class="wrap dine-head">
-      <div><span class="label">10:00 – 01:30 · Ten kitchens</span><h2>Around the world on one street</h2></div>
+      <div class="chapter-head">
+        <div><span class="label">10:00 – 01:30 · Ten kitchens</span><h2>Around the world on one street</h2></div>
+        <p class="lede">Ten kitchens from around the world, each with its own personality. From slow brunches to late dinners, they share one idea: great food, plates made for sharing and genuine hospitality.</p>
+      </div>
     </div>
     <div class="dine-scroll" id="dineScroll">
     <div class="dine-pin">
