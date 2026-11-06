@@ -126,19 +126,19 @@ main section[id] { scroll-margin-top: 84px; }
 /* Kitchens: vertical scroll drives a horizontal track */
 .dine { position: relative; }
 .dine-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(12px, 2.5vh, 28px); padding-block: 76px 64px; box-sizing: border-box; }
-.dine-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
-.dine-head h2 { font-size: clamp(36px, min(7.4vw, 8vh), 120px); }
+.dine-head { display: flex; justify-content: flex-start; align-items: flex-end; gap: 16px 40px; flex-wrap: wrap; width: 100%; box-sizing: border-box; }
+.dine-head h2 { font-size: clamp(32px, min(6.4vw, 6.6vh), 104px); }
 .dine-count { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
 .track { display: flex; gap: 20px; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); will-change: transform; width: max-content; }
 .dish { width: clamp(260px, 30vw, 380px); flex: none; background: var(--paper); color: var(--kitchen-ink); border-radius: 6px; padding: 12px 12px 14px; display: flex; flex-direction: column; gap: clamp(6px, 1.2vh, 12px); }
 .dish:nth-child(3n+2) { background: var(--kitchen-ink); color: var(--paper); }
-.dish-img { height: clamp(96px, 24vh, 260px); overflow: hidden; border-radius: 3px; }
+.dish-img { height: clamp(84px, 21vh, 250px); overflow: hidden; border-radius: 3px; }
 .dish-img img { transform: scale(1.12); transform-origin: 50% 50%; will-change: transform; }
 .dish-top { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-variant-numeric: tabular-nums; padding-inline: 4px; }
 .dish h3 { font-size: clamp(30px, min(3.8vw, 5.6vh), 58px); padding-inline: 4px; }
-.dish p { font-size: 15px; line-height: 1.5; padding-inline: 4px; }
+.dish p { font-size: clamp(13px, 1.9vh, 15px); line-height: 1.45; padding-inline: 4px; }
 .dish a { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 2px 4px 6px; align-self: flex-start; }
-@media (max-height: 760px) { .dish p { display: none; } }
+
 @media (max-height: 560px) { .dish-img { display: none; } }
 
 /* Sundown */
@@ -345,7 +345,7 @@ main section[id] { scroll-margin-top: 84px; }
   <section id="dine" class="dine" data-t="12" data-bg="--kitchen" data-fg="--kitchen-ink" data-name="Lunch &amp; dinner">
     <div class="dine-pin">
       <div class="wrap dine-head">
-        <div><span class="label">12:00 – 01:30 · Ten kitchens</span><h2>Around the world on one street</h2></div>
+        <div><span class="label">12:00 – 01:30 · Ten kitchens</span><h2>Around the world<br>on one street</h2></div>
         <span class="dine-count" id="dineCount">01 / 09</span>
       </div>
       <div class="track" id="track">
