@@ -61,8 +61,11 @@ main section[id] { scroll-margin-top: 84px; }
 .menu-btn { display: none; font: inherit; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; background: none; color: inherit; border: 1.5px solid currentColor; border-radius: 999px; padding: 12px 18px; min-height: 44px; cursor: pointer; }
 .menu { position: fixed; inset: 0; z-index: 19; background: var(--bg); color: var(--fg); padding: calc(96px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(32px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); overflow-y: auto; }
 .menu nav { display: flex; flex-direction: column; padding-inline: 8px; }
-.menu a { display: flex; align-items: baseline; gap: 16px; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(48px, 13vw, 88px); line-height: 1; text-decoration: none; padding-block: 12px; border-bottom: 1.5px solid color-mix(in srgb, currentColor 25%, transparent); }
-.menu a .label { width: 96px; flex: none; line-height: 1.4; }
+.menu a { display: flex; align-items: baseline; gap: 16px; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(30px, 8.5vw, 52px); line-height: 1; text-decoration: none; padding-block: 10px; border-bottom: 1.5px solid color-mix(in srgb, currentColor 25%, transparent); }
+.menu a .label { width: 96px; flex: none; line-height: 1.4; font-size: 11px; }
+.menu-connect { display: grid; gap: 14px; padding: 28px 8px 8px; }
+.menu .menu-connect a.social { display: grid; place-items: center; align-items: center; gap: 0; padding: 0; border: 0; font-size: inherit; }
+.menu-connect .connect-icons { gap: 12px; }
 .bar-actions { display: flex; gap: 10px; align-items: center; }
 .bar-actions .member-btn, .bar-actions .menu-btn { box-sizing: border-box; height: 44px; min-height: 0; padding: 0 18px; line-height: 1; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; border-width: 1.5px; align-items: center; justify-content: center; white-space: nowrap; }
 .bar-actions .member-btn { display: inline-flex; }
@@ -75,7 +78,7 @@ main section[id] { scroll-margin-top: 84px; }
 @media (min-width: 961px) { .menu { display: none !important; } }
 
 /* Clock */
-.clock { position: fixed; left: 0; bottom: 0; z-index: 20; padding-left: calc(var(--gutter-l) + 8px); padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); color: var(--fg); pointer-events: none; mix-blend-mode: normal; }
+.clock { position: fixed; left: 0; bottom: 0; z-index: 18; padding-left: calc(var(--gutter-l) + 8px); padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); color: var(--fg); pointer-events: none; mix-blend-mode: normal; }
 .clock-time { font-family: var(--mono); font-size: clamp(30px, 3.4vw, 44px); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; }
 .clock-meta { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
 .clock-track { width: 120px; height: 2px; background: color-mix(in srgb, currentColor 22%, transparent); position: relative; }
@@ -277,6 +280,16 @@ main section[id] { scroll-margin-top: 84px; }
     <a href="#member"><span class="label">Friends &amp; Family</span>Become a member</a>
     <a href="#visit"><span class="label">04:00</span>Visit</a>
   </nav>
+  <div class="menu-connect">
+    <span class="label">Get connected</span>
+    <div class="connect-icons">
+            <a class="social" href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener" aria-label="24 BLVD Instagram" title="Instagram"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none"/></svg></a>
+            <a class="social" href="https://www.facebook.com/profile.php?id=61561205384587" target="_blank" rel="noopener" aria-label="24 BLVD Facebook" title="Facebook"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21h3.1z"/></svg></a>
+            <a class="social" href="https://lin.ee/7eQpbCR" target="_blank" rel="noopener" aria-label="24 BLVD LINE" title="LINE"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M12 3.5c-5 0-9 3.2-9 7.2 0 3.6 3.2 6.6 7.5 7.1.3.1.7.2.8.5.1.2.1.6 0 .8l-.1.8c0 .2-.2.9.8.5s5.5-3.3 7.5-5.6c1.4-1.5 2-3 2-4.6 0-3.9-4-7.2-9.5-6.7z"/><text x="12" y="12.9" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="4.6" fill="#111">LINE</text></svg></a>
+            <a class="social" href="https://www.24blvd.com/" target="_blank" rel="noopener" aria-label="24 BLVD Website" title="Website"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.3 3.6 8.5s-1.2 6.1-3.6 8.5M12 3.5C9.6 5.9 8.4 8.8 8.4 12s1.2 6.1 3.6 8.5"/></svg></a>
+            <a class="social" href="https://maps.app.goo.gl/8psphAxhmSZAPcoH7" target="_blank" rel="noopener" aria-label="24 BLVD Map" title="Map"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M12 2.5c-3.9 0-7 3-7 6.9 0 5 7 12.1 7 12.1s7-7.1 7-12.1c0-3.9-3.1-6.9-7-6.9zm0 9.6a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4z"/></svg></a>
+          </div>
+  </div>
 </div>
 
 <div class="clock" aria-hidden="true">
@@ -766,7 +779,7 @@ main section[id] { scroll-margin-top: 84px; }
     if (lenis) { open ? lenis.stop() : lenis.start(); }
   }
   menuBtn.addEventListener('click', function () { setMenu(menu.hidden); });
-  [].slice.call(menu.querySelectorAll('a')).forEach(function (a) {
+  [].slice.call(menu.querySelectorAll('nav a')).forEach(function (a) {
     a.addEventListener('click', function (e) {
       e.preventDefault();
       var target = document.querySelector(a.getAttribute('href'));
