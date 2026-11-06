@@ -126,8 +126,10 @@ main section[id] { scroll-margin-top: 84px; }
 /* Kitchens: vertical scroll drives a horizontal track */
 .dine { position: relative; }
 .dine-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(12px, 2.5vh, 28px); padding-block: 76px 64px; box-sizing: border-box; }
-.dine-head { display: flex; justify-content: flex-start; align-items: flex-end; gap: 16px 40px; flex-wrap: wrap; width: 100%; box-sizing: border-box; }
-.dine-head h2 { font-size: clamp(32px, min(6.4vw, 6.6vh), 104px); }
+.dine-head { padding-block: 18vh 40px; }
+.dine-head .label { display: block; margin-bottom: 18px; }
+.dine-meta { width: 100%; box-sizing: border-box; }
+.dine-head h2 { font-size: clamp(64px, 10vw, 156px); }
 .dine-count { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
 .track { display: flex; gap: 20px; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); will-change: transform; width: max-content; }
 .dish { width: clamp(260px, 30vw, 380px); flex: none; background: var(--paper); color: var(--kitchen-ink); border-radius: 6px; padding: 12px 12px 14px; display: flex; flex-direction: column; gap: clamp(6px, 1.2vh, 12px); }
@@ -267,7 +269,7 @@ main section[id] { scroll-margin-top: 84px; }
   <nav aria-label="Sections">
     <a href="#about"><span class="label">Our story</span>About</a>
     <a href="#day"><span class="label">08:00</span>By day</a>
-    <a href="#dine"><span class="label">12:00</span>Dining</a>
+    <a href="#dine"><span class="label">10:00</span>Dining</a>
     <a href="#sundown"><span class="label">18:00</span>Bars</a>
     <a href="#night"><span class="label">22:00</span>Nightclubs</a>
     <a href="#events"><span class="label">Once in a while</span>Events</a>
@@ -343,11 +345,12 @@ main section[id] { scroll-margin-top: 84px; }
   </section>
 
   <section id="dine" class="dine" data-t="12" data-bg="--kitchen" data-fg="--kitchen-ink" data-name="Lunch &amp; dinner">
+    <div class="wrap dine-head">
+      <div><span class="label">10:00 – 01:30 · Ten kitchens</span><h2>Around the world on one street</h2></div>
+    </div>
+    <div class="dine-scroll" id="dineScroll">
     <div class="dine-pin">
-      <div class="wrap dine-head">
-        <div><span class="label">12:00 – 01:30 · Ten kitchens</span><h2>Around the world<br>on one street</h2></div>
-        <span class="dine-count" id="dineCount">01 / 09</span>
-      </div>
+      <div class="wrap dine-meta"><span class="dine-count" id="dineCount">01 / 09</span></div>
       <div class="track" id="track">
         <article class="dish">
           <div class="dish-img"><img class="shot" src="img/beso.jpg" width="900" height="600" loading="lazy" alt="Tapas and tacos spread across a Beso Beso table"></div>
@@ -413,6 +416,7 @@ main section[id] { scroll-margin-top: 84px; }
           <a href="https://www.instagram.com/piche.bkk/" target="_blank" rel="noopener">@piche.bkk</a>
         </article>
       </div>
+    </div>
     </div>
   </section>
 
@@ -603,7 +607,7 @@ main section[id] { scroll-margin-top: 84px; }
   var root = document.documentElement;
   var css = getComputedStyle(root);
   var sections = [].slice.call(document.querySelectorAll('main > section'));
-  var dine = document.getElementById('dine');
+  var dine = document.getElementById('dineScroll');
   var track = document.getElementById('track');
   var dishImgs = [].slice.call(track.querySelectorAll('.dish-img img'));
   var reveal = document.getElementById('reveal');
@@ -675,7 +679,7 @@ main section[id] { scroll-margin-top: 84px; }
     }
 
     var extraW = Math.max(0, track.scrollWidth - window.innerWidth);
-    var dp = extraW > 0 ? clamp((y - dine.offsetTop - dineHold()) / (extraW * SLOW)) : 0;
+    var dp = extraW > 0 ? clamp((y - (dine.getBoundingClientRect().top + y) - dineHold()) / (extraW * SLOW)) : 0;
     var shift = extraW * dp;
     track.style.transform = 'translate3d(' + (-shift) + 'px,0,0)';
     if (!reduce) {
