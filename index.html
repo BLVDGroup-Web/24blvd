@@ -46,8 +46,10 @@ p { margin: 0; }
 .shot { width: 100%; height: 100%; object-fit: cover; background: color-mix(in srgb, currentColor 10%, transparent); }
 
 /* Top bar */
-.bar { position: fixed; inset: 0 0 auto; z-index: 20; padding-top: env(safe-area-inset-top, 0px); color: var(--fg); }
-.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 18px; }
+.bar { position: fixed; inset: 0 0 auto; z-index: 20; padding-top: env(safe-area-inset-top, 0px); color: var(--fg); background: var(--bg); border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent); }
+
+main section[id] { scroll-margin-top: 84px; }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 10px; }
 .mark { display: block; text-decoration: none; }
 .logo { display: block; height: 52px; aspect-ratio: 825 / 396; background: currentColor; -webkit-mask: url(img/logo.png) center / contain no-repeat; mask: url(img/logo.png) center / contain no-repeat; }
 @media (max-width: 420px) { .logo { height: 42px; } }
