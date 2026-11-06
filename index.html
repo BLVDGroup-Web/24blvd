@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meet Me At 24</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long scroll is one day on Sukhumvit 24, 08:00 to 04:00. The ground colour and the clock follow the time of day. */
+:root {
+  --morning: #EFE4D1;  --morning-ink: #B3231B;
+  --brunch:  #F1DDA8;  --brunch-ink:  #1B1408;
+  --kitchen: #EDA545;  --kitchen-ink: #1A1006;
+  --sundown: #C2442C;  --sundown-ink: #FFF3E6;
+  --night:   #8C1A27;  --night-ink:   #F3E8DE;
+  --close:   #09090B;
+  --ember:   #2E100B;
+  --member:  #E8B95E;  --member-ink: #1C1206;  --ember-ink: #FFE9D6;
+  --paper: #FFF7E8;
+  --gold: #E6B45C;
+  --red-bright: #8C1A27;
+  --bg: var(--morning);
+  --fg: var(--morning-ink);
+  --display: "Big Shoulders Display", "Arial Narrow", "Helvetica Neue", Impact, sans-serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --reveal: 0;
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .86; margin: 0; letter-spacing: -.005em; text-wrap: balance; }
+p { margin: 0; }
+.wrap { max-width: 1320px; margin-inline: auto; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
+.lede { font-size: clamp(18px, 1.6vw, 21px); max-width: 34em; }
+.shot { width: 100%; height: 100%; object-fit: cover; background: color-mix(in srgb, currentColor 10%, transparent); }
+
+/* Top bar */
+.bar { position: fixed; inset: 0 0 auto; z-index: 20; padding-top: env(safe-area-inset-top, 0px); color: var(--fg); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 18px; }
+.mark { display: block; text-decoration: none; }
+.logo { display: block; height: 52px; aspect-ratio: 825 / 396; background: currentColor; -webkit-mask: url(img/logo.png) center / contain no-repeat; mask: url(img/logo.png) center / contain no-repeat; }
+@media (max-width: 420px) { .logo { height: 42px; } }
+.bar nav { display: flex; gap: 28px; }
+.bar nav a { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding-block: 12px; }
+.bar nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.pill { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; border: 1.5px solid currentColor; border-radius: 999px; padding: 12px 18px; white-space: nowrap; }
+.pill:hover { background: var(--fg); color: var(--bg); }
+.menu-btn { display: none; font: inherit; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; background: none; color: inherit; border: 1.5px solid currentColor; border-radius: 999px; padding: 12px 18px; min-height: 44px; cursor: pointer; }
+.menu { position: fixed; inset: 0; z-index: 19; background: var(--bg); color: var(--fg); padding: calc(96px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(32px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); overflow-y: auto; }
+.menu nav { display: flex; flex-direction: column; padding-inline: 8px; }
+.menu a { display: flex; align-items: baseline; gap: 16px; font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(48px, 13vw, 88px); line-height: 1; text-decoration: none; padding-block: 12px; border-bottom: 1.5px solid color-mix(in srgb, currentColor 25%, transparent); }
+.menu a .label { width: 96px; flex: none; line-height: 1.4; }
+.bar-actions { display: flex; gap: 10px; align-items: center; }
+.bar-actions .member-btn, .bar-actions .menu-btn { box-sizing: border-box; height: 44px; min-height: 0; padding: 0 18px; line-height: 1; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; border-width: 1.5px; align-items: center; justify-content: center; white-space: nowrap; }
+.bar-actions .member-btn { display: inline-flex; }
+.bar-actions .menu-btn { display: none; }
+@media (max-width: 960px) { .bar-actions .menu-btn { display: inline-flex; } }
+#member { scroll-margin-top: 120px; }
+.member-title { flex-basis: 100%; font-size: clamp(40px, 5vw, 72px); color: var(--gold); }
+@media (max-width: 420px) { .bar-actions .member-btn, .bar-actions .menu-btn { padding: 0 12px; font-size: 11px; letter-spacing: .1em; } }
+@media (max-width: 960px) { .bar .nav { display: none; } .menu-btn { display: inline-block; } }
+@media (min-width: 961px) { .menu { display: none !important; } }
+
+/* Clock */
+.clock { position: fixed; left: 0; bottom: 0; z-index: 20; padding-left: calc(var(--gutter-l) + 8px); padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); color: var(--fg); pointer-events: none; mix-blend-mode: normal; }
+.clock-time { font-family: var(--mono); font-size: clamp(30px, 3.4vw, 44px); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; }
+.clock-meta { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+.clock-track { width: 120px; height: 2px; background: color-mix(in srgb, currentColor 22%, transparent); position: relative; }
+.clock-fill { position: absolute; inset: 0 auto 0 0; width: 0; background: currentColor; }
+
+/* Hero */
+.hero { padding-block: 128px 0; }
+.hero h1 { font-size: clamp(88px, 19vw, 300px); }
+.hero h1 span { display: block; }
+.hero h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 2px var(--fg); }
+.hero-foot { display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: end; margin-top: 36px; }
+.hero-foot .label { text-align: right; line-height: 1.9; }
+@media (max-width: 700px) { .hero-foot { grid-template-columns: 1fr; } .hero-foot .label { text-align: left; } }
+.reveal { margin-top: 56px; height: clamp(320px, 74vh, 820px); overflow: hidden; clip-path: inset(0 calc((1 - var(--reveal)) * 6vw) round calc((1 - var(--reveal)) * 18px)); }
+.reveal img { height: 100%; transform: scale(calc(1.18 - var(--reveal) * .18)); transform-origin: 50% 60%; }
+.caption { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 14px 0; }
+
+/* About */
+.caption { align-items: center; }
+.about-toggle { font: inherit; letter-spacing: inherit; text-transform: inherit; background: none; color: inherit; border: 1.5px solid currentColor; border-radius: 999px; padding: 10px 16px; min-height: 44px; cursor: pointer; display: inline-flex; gap: 10px; align-items: center; }
+.about-toggle:hover { background: var(--fg); color: var(--bg); }
+.about-toggle span { display: inline-block; transition: transform .3s ease; }
+.about-toggle[aria-expanded="true"] span { transform: rotate(45deg); }
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 32px 64px; padding-block: 72px 24px; scroll-margin-top: 80px; }
+.about h2 { font-size: clamp(56px, 7vw, 112px); }
+.about-text { display: grid; gap: 18px; font-size: clamp(18px, 1.5vw, 20px); max-width: 38em; }
+@media (max-width: 800px) { .about { grid-template-columns: 1fr; padding-block: 80px 24px; } }
+
+/* Chapter heads */
+.chapter { padding-block: 18vh 12vh; }
+.chapter-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; margin-bottom: 64px; }
+.chapter-head h2 { font-size: clamp(64px, 10vw, 156px); }
+.chapter-head .label { display: block; margin-bottom: 18px; }
+@media (max-width: 800px) { .chapter-head { grid-template-columns: 1fr; } }
+
+/* Daytime */
+.spots { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px 24px; }
+.spot { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.spot-img { aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; }
+.spot-img img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.spot:hover .spot-img img { transform: scale(1.05); }
+.soon-wrap { position: relative; }
+.soon { position: absolute; left: 12px; top: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; background: var(--brunch); color: var(--brunch-ink); border-radius: 999px; padding: 6px 12px; }
+.spot .hours { margin: 0; font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; padding-top: 6px; border-top: 1.5px solid currentColor; }
+.spot h3 { font-size: clamp(36px, 3.2vw, 48px); }
+.spot p { max-width: 30em; }
+
+/* Kitchens: vertical scroll drives a horizontal track */
+.dine { position: relative; }
+.dine-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
+.dine-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.dine-head h2 { font-size: clamp(56px, 8.4vw, 132px); }
+.dine-count { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.track { display: flex; gap: 20px; padding-left: calc(var(--gutter-l) + 8px); padding-right: calc(var(--gutter-r) + 8px); will-change: transform; width: max-content; }
+.dish { width: clamp(260px, 30vw, 380px); flex: none; background: var(--paper); color: var(--kitchen-ink); border-radius: 6px; padding: 14px 14px 20px; display: flex; flex-direction: column; gap: 12px; }
+.dish:nth-child(3n+2) { background: var(--kitchen-ink); color: var(--paper); }
+.dish-img { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; }
+.dish-img img { transform: scale(1.12); transform-origin: 50% 50%; will-change: transform; }
+.dish-top { display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-variant-numeric: tabular-nums; padding-inline: 4px; }
+.dish h3 { font-size: clamp(42px, 3.8vw, 58px); padding-inline: 4px; }
+.dish p { font-size: 15px; line-height: 1.5; padding-inline: 4px; }
+.dish a { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; margin-top: auto; padding: 10px 4px 0; }
+@media (max-height: 700px) { .dish p { display: none; } }
+@media (max-height: 560px) { .dish-img { display: none; } }
+
+/* Sundown */
+.pairs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px; }
+.hours { font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; display: block; margin-bottom: 10px; }
+.feature { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: 48px; }
+.feature-img { aspect-ratio: 3 / 2; overflow: hidden; border-radius: 4px; }
+.feature h3 { font-size: clamp(48px, 5.4vw, 84px); margin-bottom: 14px; }
+@media (max-width: 800px) { .feature { grid-template-columns: 1fr; } }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr) 140px; gap: 24px; padding-block: 28px; border-top: 1.5px solid color-mix(in srgb, currentColor 35%, transparent); align-items: start; }
+.pair h3 { font-size: clamp(36px, 3.4vw, 50px); margin-bottom: 10px; }
+.pair-img { aspect-ratio: 1; overflow: hidden; border-radius: 4px; }
+@media (max-width: 1000px) { .pairs { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .pair { grid-template-columns: minmax(0, 1fr) 96px; gap: 16px; } }
+
+/* Night */
+.strip { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; align-items: start; margin-bottom: 72px; }
+.strip figure { margin: 0; overflow: hidden; border-radius: 4px; will-change: transform; }
+.strip figure:nth-child(1) { aspect-ratio: 1; }
+.strip figure:nth-child(2) { aspect-ratio: 2 / 3; margin-top: 120px; }
+@media (max-width: 700px) { .strip figure:nth-child(2) { margin-top: 48px; } }
+.sound { overflow: hidden; border-block: 1.5px solid color-mix(in srgb, currentColor 30%, transparent); padding-block: 14px; margin-bottom: 56px; }
+.sound-run { display: flex; gap: 40px; width: max-content; font-family: var(--mono); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); animation: run 40s linear infinite; }
+@keyframes run { to { transform: translateX(-50%); } }
+.clubs { border-top: 1.5px solid color-mix(in srgb, currentColor 35%, transparent); }
+.club { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px 48px; align-items: end; padding-block: 36px; border-bottom: 1.5px solid color-mix(in srgb, currentColor 35%, transparent); }
+.club h3 { grid-column: 1 / -1; font-size: clamp(64px, 11vw, 176px); color: transparent; -webkit-text-stroke: 1.5px var(--fg); transition: color .35s ease, -webkit-text-stroke-color .35s ease; }
+.club:hover h3, .club:focus-within h3 { color: var(--gold); -webkit-text-stroke-color: var(--gold); }
+.club-info { display: flex; flex-direction: column; gap: 8px; padding-bottom: 6px; }
+.club-info .label { color: var(--gold); }
+.club-info .hours { margin: 0; font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.club-img { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px; }
+@media (max-width: 800px) { .club { grid-template-columns: 1fr; } .club-img { order: -1; grid-row: 2; } }
+.abroad { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; align-items: center; margin-top: 48px; max-width: 760px; }
+.abroad-img { aspect-ratio: 5 / 4; overflow: hidden; border-radius: 4px; }
+.abroad p { font-size: 15px; opacity: .88; }
+.abroad h3 { font-size: 40px; margin-bottom: 8px; }
+@media (max-width: 560px) { .abroad { grid-template-columns: 1fr; } }
+
+.head-side { display: grid; gap: 24px; }
+.head-img { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px; max-width: 520px; }
+
+.v-links { display: flex; flex-wrap: wrap; gap: 4px 20px; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.dish a { text-transform: none; letter-spacing: .04em; }
+.v-links a, .event-links a { padding-block: 10px; text-underline-offset: 4px; text-transform: none; letter-spacing: .04em; }
+.club-info .v-links a { color: var(--gold); }
+
+.connect { display: grid; gap: 14px; margin-top: 24px; }
+.connect .label { color: var(--gold); }
+.connect-icons { display: flex; flex-wrap: wrap; gap: 14px; }
+.social { width: 56px; height: 56px; border-radius: 50%; background: #000; display: grid; place-items: center; box-shadow: 0 0 0 1px rgba(255,255,255,.22); transition: transform .2s ease, box-shadow .2s ease; }
+.social:hover { transform: translateY(-2px); box-shadow: 0 0 0 1.5px #fff; }
+
+/* Events */
+.events-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 32px; }
+.event { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.event-img { aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; position: relative; }
+.event-img img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.event:hover .event-img img { transform: scale(1.04); }
+.event-tag { position: absolute; left: 12px; top: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; background: var(--gold); color: #1A1006; border-radius: 999px; padding: 6px 12px; }
+.event h3 { font-size: clamp(48px, 5.6vw, 88px); }
+.event .hours { margin: 0; }
+.event p { max-width: 34em; }
+.event-stat { display: flex; gap: 32px; flex-wrap: wrap; }
+.event-stat + .event-links { padding-bottom: 12px; border-bottom: 1.5px solid color-mix(in srgb, currentColor 30%, transparent); }
+.event-stat b { display: block; font-family: var(--display); font-weight: 900; font-size: clamp(56px, 6vw, 88px); line-height: 1; font-variant-numeric: tabular-nums; }
+.event-stat span { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+.event-links { display: flex; gap: 20px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.event-links a { padding-block: 10px; }
+.reel { overflow: hidden; margin-block: 8px; border-radius: 4px; }
+.reel-track { display: flex; gap: 12px; width: max-content; will-change: transform; }
+.reel figure { margin: 0; height: clamp(200px, 24vw, 320px); aspect-ratio: var(--ar); max-width: 80vw; border-radius: 4px; overflow: hidden; flex: none; }
+@media (max-width: 760px) { .events-grid { grid-template-columns: 1fr; } }
+
+/* Close */
+.member-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 40px 64px; align-items: center; }
+.member-text { display: grid; gap: 22px; justify-items: start; }
+.member-text h2 { font-size: clamp(64px, 8.4vw, 136px); }
+.member-img { margin: 0; aspect-ratio: 1200 / 917; overflow: hidden; border-radius: 4px; max-width: 620px; justify-self: end; width: 100%; }
+@media (max-width: 800px) { .member-grid { grid-template-columns: 1fr; } .member-img { justify-self: stretch; max-width: none; } }
+.close { padding-block: 12vh calc(180px + env(safe-area-inset-bottom, 0px)); }
+.close .app { margin-top: 0; }
+.signoff { display: grid; gap: 16px; }
+.close h2 { font-size: clamp(88px, 17vw, 270px); }
+.close h2 em { font-style: normal; color: var(--red-bright); }
+.visit { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 40px; border-top: 1.5px solid color-mix(in srgb, currentColor 35%, transparent); padding-top: 32px; }
+.visit .label { display: block; margin-bottom: 10px; color: var(--gold); }
+.visit p { font-size: 16px; }
+.copy { font: inherit; font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; background: none; color: inherit; border: 1.5px solid currentColor; border-radius: 999px; padding: 10px 14px; margin-top: 10px; cursor: pointer; min-height: 44px; }
+.app { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; margin-top: 56px; }
+.app .pill { color: var(--gold); }
+.app .pill:hover { background: var(--gold); color: var(--close); }
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-run { animation: none; }
+  .club h3, .spot-img img { transition: none; }
+  .reveal { clip-path: none; }
+  .reveal img, .dish-img img { transform: none; }
+}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="24 BLVD, back to top"><span class="logo" aria-hidden="true"></span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#day">By day</a>
+      <a href="#dine">Dining</a>
+      <a href="#sundown">Bars</a>
+      <a href="#night">Nightclubs</a>
+      <a href="#events">Events</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="bar-actions">
+    <a class="pill member-btn" href="#member">Become a member</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Sections">
+    <a href="#about"><span class="label">Our story</span>About</a>
+    <a href="#day"><span class="label">08:00</span>By day</a>
+    <a href="#dine"><span class="label">12:00</span>Dining</a>
+    <a href="#sundown"><span class="label">18:00</span>Bars</a>
+    <a href="#night"><span class="label">22:00</span>Nightclubs</a>
+    <a href="#events"><span class="label">Once in a while</span>Events</a>
+    <a href="#visit"><span class="label">04:00</span>Visit</a>
+    <a href="#member"><span class="label">Friends &amp; Family</span>Become a member</a>
+  </nav>
+</div>
+
+<div class="clock" aria-hidden="true">
+  <div class="clock-time" id="clockTime">08:00</div>
+  <div class="clock-meta">
+    <div class="clock-track"><div class="clock-fill" id="clockFill"></div></div>
+    <span class="label" id="clockLabel">Morning</span>
+  </div>
+</div>
+
+
+<main>
+  <section id="top" class="hero" data-t="8" data-bg="--morning" data-fg="--morning-ink" data-name="Morning">
+    <div class="wrap">
+      <h1><span>Meet me</span><span>at <em>24.</em></span></h1>
+      <div class="hero-foot">
+        <p class="lede">Brunch to 4 a.m. on Sukhumvit 24. Ten kitchens, a courtyard, cocktail and wine bars, and three nightclubs inside The Davis Bangkok compound. Scroll to spend a day here.</p>
+        <p class="label">The Davis Bangkok<br>Sukhumvit 24<br>Open 08:00 – 04:00</p>
+      </div>
+    </div>
+    <div class="reveal" id="reveal">
+      <img class="shot" src="img/courtyard-night.jpg" width="1600" height="1067" alt="The 24 BLVD courtyard lit up in the evening, with palm trees and string lights">
+    </div>
+    <div class="wrap caption label"><span>The Davis Bangkok, Sukhumvit 24</span><button class="about-toggle" id="aboutToggle" type="button" aria-expanded="false" aria-controls="about">About 24 BLVD <span aria-hidden="true">+</span></button></div>
+    <div class="wrap about" id="about" hidden>
+      <h2>About<br>24 BLVD</h2>
+      <div class="about-text">
+        <p>Created by Davis Corporation, 24 BLVD is Bangkok's most vibrant dining and entertainment destination, where food, music, culture and community come together. Located within The Davis Bangkok Hotel compound on Sukhumvit 24, it runs from leisurely brunches and afternoon drinks to live performances, international DJs and late nights.</p>
+        <p>24 BLVD brings locals, expats and travellers together, drawing thousands of people to Sukhumvit 24 every night and making the neighbourhood one of Bangkok's most exciting social destinations.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="day" class="chapter" data-t="10" data-bg="--brunch" data-fg="--brunch-ink" data-name="By day">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div><span class="label">08:00 – 17:00</span><h2>The street wakes up slow</h2></div>
+        <p class="lede">Coffee in the sun, a long brunch in the courtyard, a round of golf between songs. Daytime on the street is for catching up.</p>
+      </div>
+      <div class="spots">
+        <article class="spot">
+          <div class="spot-img"><img class="shot" src="img/mandrake-cafe.jpg" width="900" height="900" loading="lazy" alt="Iced coffee and matcha in Mandrake Café cups with a chocolate pastry"></div>
+          <span class="hours">08:00 – 18:00</span>
+          <h3>Mandrake Café</h3>
+          <p>Coffee, matcha and a quiet table on the 2nd floor, looking over The Davis. It turns into a cocktail bar at night.</p><div class="v-links"><a href="https://www.instagram.com/mandrake_cafe/" target="_blank" rel="noopener">@mandrake_cafe</a></div>
+        </article>
+        <article class="spot">
+          <div class="spot-img"><img class="shot" src="img/blvd-day.jpg" width="1600" height="1066" loading="lazy" alt="The 24 BLVD courtyard by day, with palm trees and terrace seating"></div>
+          <span class="hours">10:00 – 02:00</span>
+          <h3>24 BLVD</h3>
+          <p>The street's favourite brunch spot. An open-air courtyard where the menu runs all day: health bowls and coffee, a long lunch, or a quick bite between meetings.</p><div class="v-links"><a href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener">@24blvdbangkok</a></div>
+        </article>
+        <article class="spot">
+          <div class="spot-img"><img class="shot" src="img/fairway.jpg" width="825" height="660" loading="lazy" alt="A golfer teeing off in a Fairway golf simulator room"></div>
+          <span class="hours">08:00 – 02:00</span>
+          <h3>Fairway Golf &amp; City Club</h3>
+          <p>Private rooms with TrackMan 4 golf simulators and karaoke. Book one room, or join several for a bigger group.</p><div class="v-links"><a href="https://www.instagram.com/fairwaygolfandcityclub/" target="_blank" rel="noopener">@fairwaygolfandcityclub</a></div>
+        </article>
+        <article class="spot">
+          <div class="spot-img soon-wrap"><img class="shot" src="img/terrace.jpg" width="615" height="820" loading="lazy" alt="Terrace tables and greenery at The Terrace"><span class="soon">Coming soon</span></div>
+          <span class="hours">Opening soon</span>
+          <h3>The Terrace</h3>
+          <p>Specialty coffee, all-day dining and a bar.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="dine" class="dine" data-t="12" data-bg="--kitchen" data-fg="--kitchen-ink" data-name="Lunch &amp; dinner">
+    <div class="dine-pin">
+      <div class="wrap dine-head">
+        <div><span class="label">12:00 – 01:30 · Ten kitchens</span><h2>Around the world on one street</h2></div>
+        <span class="dine-count" id="dineCount">01 / 09</span>
+      </div>
+      <div class="track" id="track">
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/beso.jpg" width="900" height="600" loading="lazy" alt="Tapas and tacos spread across a Beso Beso table"></div>
+          <div class="dish-top"><span>Spanish &amp; Mexican</span><span>10:00 – 01:30</span></div>
+          <h3>Beso Beso</h3>
+          <p>Jamón ibérico and croquetas next to birria tacos and al pastor. A cantina made for sharing.</p>
+          <a href="https://www.instagram.com/besobesobangkok/" target="_blank" rel="noopener">@besobesobangkok</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/amore.jpg" width="800" height="534" loading="lazy" alt="A plated dish at Amore"></div>
+          <div class="dish-top"><span>Italian · Brunch</span><span>10:00 – 01:30</span></div>
+          <h3>Amore</h3>
+          <p>Seasonal Italian comfort food: slow-braised beef cheek, rotating pastas, chicken parmigiana. Brunch edition on weekends.</p>
+          <a href="https://www.instagram.com/amorebkk/" target="_blank" rel="noopener">@amorebkk</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/notinbangkok.jpg" width="800" height="1200" loading="lazy" alt="A Thai noodle dish from Not in Bangkok"></div>
+          <div class="dish-top"><span>Thai</span><span>10:00 – 01:30</span></div>
+          <h3>Not in Bangkok</h3>
+          <p>Dishes from every region of Thailand at one table. Wok-charred phad thai, a fiery kra prao, crispy fried larb.</p>
+          <a href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener">@24blvdbangkok</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/lulu.jpg" width="800" height="528" loading="lazy" alt="Korean dishes and banchan at Lulu"></div>
+          <div class="dish-top"><span>Korean</span><span>10:00 – 01:30</span></div>
+          <h3>Lulu</h3>
+          <p>Korean home cooking. Bibimbap, kimchi jjigae, seafood jeon and LA galbi off the open flame.</p>
+          <a href="https://www.instagram.com/lulukoreanbistro/" target="_blank" rel="noopener">@lulukoreanbistro</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/sampao.jpg" width="800" height="1054" loading="lazy" alt="Congee and Thai-Chinese sharing plates at Sampao"></div>
+          <div class="dish-top"><span>Chinese-Thai</span><span>10:00 – 01:00</span></div>
+          <h3>Sampao</h3>
+          <p>Khao tom kui done properly: warm rice congee with Thai-Chinese stir-fries and plates to share.</p>
+          <a href="https://www.instagram.com/sampao.bkk/" target="_blank" rel="noopener">@sampao.bkk</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/hone.jpg" width="800" height="856" loading="lazy" alt="A Japanese small plate at Hone"></div>
+          <div class="dish-top"><span>Japanese</span><span>10:00 – 24:00</span></div>
+          <h3>Hone</h3>
+          <p>A charcoal-grill izakaya. Yakitori first, then wagyu tongue capellini, with sake.</p>
+          <a href="https://www.instagram.com/hone.bangkok/" target="_blank" rel="noopener">@hone.bangkok</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/yumcha.jpg" width="800" height="865" loading="lazy" alt="Dim sum baskets and drinks at Yumcha"></div>
+          <div class="dish-top"><span>Chinese</span><span>10:00 – 01:30</span></div>
+          <h3>Yumcha</h3>
+          <p>Dim sum for the table: har gow, chilli wontons, char siu noodles and more.</p>
+          <a href="https://www.instagram.com/yumchabkk/" target="_blank" rel="noopener">@yumchabkk</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/fishcorner.jpg" width="800" height="968" loading="lazy" alt="Battered fish and chips at Fish Corner"></div>
+          <div class="dish-top"><span>Fish &amp; chips</span><span>10:00 – 01:30</span></div>
+          <h3>Fish Corner</h3>
+          <p>Fresh local fish, battered and fried, plus fish burgers and Thai-style seafood.</p>
+          <a href="https://www.instagram.com/fishcorner.bkk/" target="_blank" rel="noopener">@fishcorner.bkk</a>
+        </article>
+        <article class="dish">
+          <div class="dish-img"><img class="shot" src="img/piche-dining.jpg" width="800" height="604" loading="lazy" alt="Mediterranean sharing plates and wine at Piché Dining"></div>
+          <div class="dish-top"><span>Mediterranean</span><span>10:00 – 01:30</span></div>
+          <h3>Piché Dining</h3>
+          <p>European sharing plates with wine poured straight from the tap.</p>
+          <a href="https://www.instagram.com/piche.bkk/" target="_blank" rel="noopener">@piche.bkk</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="sundown" class="chapter" data-t="18" data-bg="--sundown" data-fg="--sundown-ink" data-name="Sundown">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div><span class="label">17:00 – 22:00</span><h2>First drink, then decide</h2></div>
+        <div class="head-side">
+          <p class="lede">The courtyard is where most nights start. From here it is a few steps to a speakeasy, a wine bar or the clubs.</p>
+        </div>
+      </div>
+      <article class="feature">
+        <div class="feature-img"><img class="shot" src="img/courtyard.jpg" width="900" height="600" loading="lazy" alt="The round bar in the 24 BLVD Courtyard seen from above, busy with guests"></div>
+        <div class="feature-text">
+          <span class="hours">Every day 10:00 – 02:00</span>
+          <h3>24 BLVD Courtyard</h3>
+          <p>The starting point of every night on Sukhumvit 24: an open-air courtyard with food, drinks and music. Live music 17:00 – 20:00, then DJs until 02:00.</p><div class="v-links"><a href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener">@24blvdbangkok</a></div>
+        </div>
+      </article>
+      <div class="pairs">
+        <article class="pair">
+          <div><span class="hours">18:00 – 02:00</span><h3>Piché</h3><p>A wine bar with Thailand's first wine on tap and hundreds of bottles from around the world. Come for the wine, stay for the energy.</p><div class="v-links"><a href="https://www.instagram.com/piche.bkk/" target="_blank" rel="noopener">@piche.bkk</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/piche.jpg" width="656" height="820" loading="lazy" alt="The wine-on-tap wall and taps at Piché"></div>
+        </article>
+        <article class="pair">
+          <div><span class="hours">18:00 – 04:00</span><h3>ALC</h3><p>More than 30 house-crafted cocktails, poured your way. Grab one to go or sink into a seat and stay.</p><div class="v-links"><a href="https://www.instagram.com/alc.bkk/" target="_blank" rel="noopener">@alc.bkk</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/alc.jpg" width="661" height="820" loading="lazy" alt="Close-up of a red cocktail at ALC"></div>
+        </article>
+        <article class="pair">
+          <div><span class="hours">18:00 – 01:00</span><h3>Hone Sake Bar</h3><p>A hidden sake bar on the 2nd floor of 24 BLVD. Pick your sake, then pick the glass to drink it from.</p><div class="v-links"><a href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener">@24blvdbangkok</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/hone-sake-bar.jpg" width="900" height="600" loading="lazy" alt="Bartenders behind the counter at Hone Sake Bar"></div>
+        </article>
+        <article class="pair">
+          <div><span class="hours">08:00 – 02:00</span><h3>Mandrake Bar</h3><p>A speakeasy above the street with cigars, cocktails, a pool table and a view over The Davis and 24 BLVD.</p><div class="v-links"><a href="https://www.instagram.com/mandrake_cafe/" target="_blank" rel="noopener">@mandrake_cafe</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/mandrake-bar.jpg" width="900" height="720" loading="lazy" alt="The open-air terrace lounge at Mandrake Bar"></div>
+        </article>
+        <article class="pair">
+          <div><span class="hours">20:00 – 04:00</span><h3>Lobby Bar</h3><p>A curved marble bar, yellow chairs and an amber ceiling light in the hotel's Main Wing. Evening drinks before a night out.</p><div class="v-links"><a href="https://www.instagram.com/thedavishotelbangkok/" target="_blank" rel="noopener">@thedavishotelbangkok</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/lobby-bar.jpg" width="900" height="900" loading="lazy" alt="Guests on yellow chairs around the marble bar at Lobby Bar"></div>
+        </article>
+        <article class="pair">
+          <div><span class="hours">21:00 – 02:00</span><h3>Jerry</h3><p>A Thai live-music bar with well-known local bands every week. Sing along to the hits until late.</p><div class="v-links"><a href="https://www.instagram.com/jerry.bkk/" target="_blank" rel="noopener">@jerry.bkk</a></div></div>
+          <div class="pair-img"><img class="shot" src="img/jerry.jpg" width="656" height="820" loading="lazy" alt="A band playing live at Jerry"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="night" class="chapter" data-t="22" data-bg="--night" data-fg="--night-ink" data-name="After dark">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div><span class="label">22:00 – 04:00</span><h2>Three rooms, three sounds</h2></div>
+        <p class="lede">International headliners and resident DJs every night of the week.</p>
+      </div>
+    </div>
+    <div class="sound" aria-hidden="true">
+      <div class="sound-run">
+        <span>House</span><span>Tech house</span><span>Techno</span><span>R&amp;B</span><span>Hip-hop</span><span>Jersey club</span><span>Open format</span>
+        <span>House</span><span>Tech house</span><span>Techno</span><span>R&amp;B</span><span>Hip-hop</span><span>Jersey club</span><span>Open format</span>
+        <span>House</span><span>Tech house</span><span>Techno</span><span>R&amp;B</span><span>Hip-hop</span><span>Jersey club</span><span>Open format</span>
+        <span>House</span><span>Tech house</span><span>Techno</span><span>R&amp;B</span><span>Hip-hop</span><span>Jersey club</span><span>Open format</span>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="clubs">
+        <article class="club" tabindex="0" data-img="img/baccarat.jpg">
+          <h3>Baccarat</h3>
+          <div class="club-info">
+            <span class="label">House · Tech house · Techno</span>
+            <p>Bangkok's house and techno institution. Past headliners include Bob Sinclar, Like Mike and Martin Garrix.</p>
+            <span class="hours">22:00 – 04:00 · Main Wing, The Davis Bangkok</span><div class="v-links"><a href="https://www.instagram.com/baccaratbangkok/" target="_blank" rel="noopener">@baccaratbangkok</a><a href="https://baccarat.menu.24blvd.com/" target="_blank" rel="noopener">Drinks menu</a></div>
+          </div>
+          <div class="club-img"><img class="shot" src="img/baccarat.jpg" width="800" height="533" loading="lazy" alt="A packed dance floor under a disco ball at Baccarat"></div>
+        </article>
+        <article class="club" tabindex="0" data-img="img/upperhouse.jpg">
+          <h3>Upper House</h3>
+          <div class="club-info">
+            <span class="label">Hip-hop · R&amp;B</span>
+            <p>A small penthouse-style bar upstairs at 24 BLVD. Try the Hotel Room 88.</p>
+            <span class="hours">22:00 – 04:00 · 2nd floor, 24 BLVD</span><div class="v-links"><a href="https://www.instagram.com/upperhousebangkok/" target="_blank" rel="noopener">@upperhousebangkok</a><a href="https://upperhouse.menu.24blvd.com/" target="_blank" rel="noopener">Drinks menu</a></div>
+          </div>
+          <div class="club-img"><img class="shot" src="img/upperhouse.jpg" width="900" height="600" loading="lazy" alt="A crowd in red light at Upper House"></div>
+        </article>
+        <article class="club" tabindex="0" data-img="img/savoy.jpg">
+          <h3>House of Savoy</h3>
+          <div class="club-info">
+            <span class="label">Hip-hop culture</span>
+            <p>Themed nights including Sinners &amp; Saints, Forgive Me Father Tuesday and a Sunday Service residency.</p>
+            <span class="hours">22:00 – 04:00 · SILQ Hotel, 5 min walk</span><div class="v-links"><a href="https://www.instagram.com/houseofsavoybangkok/" target="_blank" rel="noopener">@houseofsavoybangkok</a><a href="https://houseofsavoy.menu.24blvd.com/" target="_blank" rel="noopener">Drinks menu</a></div>
+          </div>
+          <div class="club-img"><img class="shot" src="img/savoy.jpg" width="900" height="600" loading="lazy" alt="DJ lights over the crowd at House of Savoy"></div>
+        </article>
+      </div>
+      <div class="abroad">
+        <div class="abroad-img"><img class="shot" src="img/upperhk.jpg" width="900" height="613" loading="lazy" alt="Red light bars over the dance floor at Upper Hong Kong"></div>
+        <div>
+          <span class="label">Also in Hong Kong</span>
+          <h3>Upper Hong Kong</h3>
+          <p>8th floor of California Tower, Lan Kwai Fong. Wednesday to Saturday, 22:00 – 04:00.</p><div class="v-links"><a href="https://www.instagram.com/upperhongkong/" target="_blank" rel="noopener">@upperhongkong</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="events" class="chapter" data-t="25" data-bg="--ember" data-fg="--ember-ink" data-name="Events">
+    <div class="wrap">
+      <div class="chapter-head">
+        <div><span class="label">Once in a while</span><h2>The street throws a party</h2></div>
+        <p class="lede">Local, newcomer or just passing through, there is always something happening on Sukhumvit 24. Art, music, light and sound come together for celebrations you won't find anywhere else in Bangkok.</p>
+      </div>
+      <div class="events-grid">
+        <article class="event">
+          <div class="event-img"><img class="shot" src="img/christmas.jpg" width="656" height="820" loading="lazy" alt="A lit Christmas tree in the 24 BLVD courtyard"><span class="event-tag">On now</span></div>
+          <span class="hours">November – 31 December</span>
+          <h3>Christmas Lights &amp; Ball Drop</h3>
+          <p>From November through December the boulevard fills with Christmas lights and seasonal decorations against the architecture of The Davis Bangkok. The year ends with the 24 BLVD Ball Drop NYE Celebration: music, entertainment and the countdown.</p>
+          <div class="event-links"><a href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener">@24blvdbangkok</a><a href="https://maps.app.goo.gl/wRyAS1Wbr13CrtxB9" target="_blank" rel="noopener">Map</a></div>
+        </article>
+        <article class="event">
+          <div class="event-img"><img class="shot" src="img/burning-city.jpg" width="615" height="820" loading="lazy" alt="Masked stilt performers and fire at Burning City"><span class="event-tag">Every Halloween</span></div>
+          <span class="hours">Halloween · Sukhumvit 24</span>
+          <h3>Burning City</h3>
+          <p>Thailand's biggest and wildest street Halloween party. The whole street turns into the end of the world, with seven venues, local and international lineups, art installations and live performances.</p>
+          <div class="reel" aria-label="Photos from past events">
+            <div class="reel-track" id="reel">
+              <figure style="--ar: 900 / 719"><img class="shot" src="img/ev-300e.jpg" width="900" height="719" loading="lazy" alt="A packed crowd under red stage lights"></figure>
+              <figure style="--ar: 615 / 820"><img class="shot" src="img/ev-ef91.jpg" width="615" height="820" loading="lazy" alt="Crowd beneath palm fronds and red lights"></figure>
+              <figure style="--ar: 615 / 820"><img class="shot" src="img/ev-f805.jpg" width="615" height="820" loading="lazy" alt="A performer with sparklers beside a Baccarat sign"></figure>
+              <figure style="--ar: 900 / 719"><img class="shot" src="img/ev-f6b8.jpg" width="900" height="719" loading="lazy" alt="Phones raised in a crowd under a chandelier"></figure>
+              <figure style="--ar: 658 / 820"><img class="shot" src="img/ev-0568.jpg" width="658" height="820" loading="lazy" alt="Two guests posing in stage smoke"></figure>
+              <figure style="--ar: 656 / 820"><img class="shot" src="img/ev-b2e6.jpg" width="656" height="820" loading="lazy" alt="A crowd in orange light inside a warehouse-style space"></figure>
+            </div>
+          </div>
+          <div class="event-stat"><div><b class="count" data-to="16000">16,000</b><span>Guests in 2026</span></div></div>
+          <div class="event-links"><a href="https://www.instagram.com/burningcitybangkok/" target="_blank" rel="noopener">@burningcitybangkok</a><a href="https://www.facebook.com/profile.php?id=61566049057328" target="_blank" rel="noopener">Facebook</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="member" class="chapter member" data-t="27" data-bg="--member" data-fg="--member-ink" data-name="Friends &amp; Family">
+    <div class="wrap member-grid">
+      <div class="member-text">
+        <span class="label">Become a member</span>
+        <h2>24 BLVD Friends &amp; Family</h2>
+        <p class="lede">Join 24 BLVD Friends &amp; Family in the app for events, promotions, day and night passes, and table bookings.</p>
+        <a class="pill" href="#member">Get the app [App Store / Google Play links]</a>
+      </div>
+      <figure class="member-img"><img class="shot" src="img/friends-family.jpg" width="1200" height="917" loading="lazy" alt="Two friends with drinks at a table at 24 BLVD"></figure>
+    </div>
+  </section>
+
+  <section id="visit" class="close" data-t="28" data-bg="--close" data-fg="--night-ink" data-name="Last call">
+    <div class="wrap">
+      <footer class="signoff">
+        <span class="label">04:00</span>
+        <h2>See you<br>at <em>24.</em></h2>
+        <div class="visit">
+          <div><span class="label">Address</span><p>88/2, 88/9 Sukhumvit 24 Alley<br>Khlong Toei, Bangkok 10110</p><p><a href="https://maps.app.goo.gl/8psphAxhmSZAPcoH7" target="_blank" rel="noopener">Open in Google Maps</a></p></div>
+          <div><span class="label">Hours</span><p>Every day, 08:00 – 04:00<br>Each venue keeps its own hours</p></div>
+          <div><span class="label">Parking</span><p>700 self-parking spaces at The Davis Bangkok</p></div>
+          <div><span class="label">Contact</span><p>info@24blvd.com</p></div>
+        </div>
+        <div class="connect">
+          <span class="label">Get connected</span>
+          <div class="connect-icons">
+            <a class="social" href="https://www.instagram.com/24blvdbangkok/" target="_blank" rel="noopener" aria-label="24 BLVD Instagram" title="Instagram"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="#fff" stroke="none"/></svg></a>
+            <a class="social" href="https://www.facebook.com/profile.php?id=61561205384587" target="_blank" rel="noopener" aria-label="24 BLVD Facebook" title="Facebook"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M13.6 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21h3.1z"/></svg></a>
+            <a class="social" href="https://lin.ee/7eQpbCR" target="_blank" rel="noopener" aria-label="24 BLVD LINE" title="LINE"><svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M12 3.5c-5 0-9 3.2-9 7.2 0 3.6 3.2 6.6 7.5 7.1.3.1.7.2.8.5.1.2.1.6 0 .8l-.1.8c0 .2-.2.9.8.5s5.5-3.3 7.5-5.6c1.4-1.5 2-3 2-4.6 0-3.9-4-7.2-9.5-6.7z"/><text x="12" y="12.9" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="4.6" fill="#111">LINE</text></svg></a>
+            <a class="social" href="https://www.24blvd.com/" target="_blank" rel="noopener" aria-label="24 BLVD Website" title="Website"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.3 3.6 8.5s-1.2 6.1-3.6 8.5M12 3.5C9.6 5.9 8.4 8.8 8.4 12s1.2 6.1 3.6 8.5"/></svg></a>
+            <a class="social" href="https://maps.app.goo.gl/8psphAxhmSZAPcoH7" target="_blank" rel="noopener" aria-label="24 BLVD Map" title="Map"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M12 2.5c-3.9 0-7 3-7 6.9 0 5 7 12.1 7 12.1s7-7.1 7-12.1c0-3.9-3.1-6.9-7-6.9zm0 9.6a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4z"/></svg></a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lenis = null;
+  if (window.Lenis && !reduce) {
+    lenis = new Lenis({ autoRaf: true, anchors: true, allowNestedScroll: true, lerp: 0.09 });
+  }
+
+  var root = document.documentElement;
+  var css = getComputedStyle(root);
+  var sections = [].slice.call(document.querySelectorAll('main > section'));
+  var dine = document.getElementById('dine');
+  var track = document.getElementById('track');
+  var dishImgs = [].slice.call(track.querySelectorAll('.dish-img img'));
+  var reveal = document.getElementById('reveal');
+  var reel = document.getElementById('reel');
+  var speeds = [].slice.call(document.querySelectorAll('[data-speed]'));
+  var dineCount = document.getElementById('dineCount');
+  var clockTime = document.getElementById('clockTime');
+  var clockLabel = document.getElementById('clockLabel');
+  var clockFill = document.getElementById('clockFill');
+
+  function hex(token) {
+    var v = css.getPropertyValue(token).trim();
+    return [1, 3, 5].map(function (i) { return parseInt(v.slice(i, i + 2), 16); });
+  }
+  var stops = sections.map(function (s) {
+    return { el: s, t: parseFloat(s.dataset.t), bg: hex(s.dataset.bg), fg: hex(s.dataset.fg), name: s.dataset.name };
+  });
+  function rgb(c) { return 'rgb(' + c.join(',') + ')'; }
+  function mix(a, b, p) { return rgb(a.map(function (v, i) { return Math.round(v + (b[i] - v) * p); })); }
+  function ease(p) { return p * p * (3 - 2 * p); }
+  function clamp(v) { return Math.min(1, Math.max(0, v)); }
+
+  // The kitchens section is as tall as its track is wide, so scrolling down moves the cards sideways.
+  // Scroll distance per pixel of sideways travel (higher = slower), plus a pause at each end.
+  var SLOW = 1.9;
+  function dineHold() { return window.innerHeight * 0.4; }
+  function sizeDine() {
+    var extra = Math.max(0, track.scrollWidth - window.innerWidth);
+    dine.style.height = (window.innerHeight + extra * SLOW + dineHold() * 2) + 'px';
+  }
+
+  var start = 8, end = 28;
+  function update() {
+    var y = window.scrollY, vh = window.innerHeight, probe = y + vh * 0.5;
+    var i = 0;
+    for (var k = 0; k < stops.length; k++) { if (stops[k].el.offsetTop <= probe) i = k; }
+    var cur = stops[i], next = stops[Math.min(i + 1, stops.length - 1)];
+    var top = cur.el.offsetTop, h = cur.el.offsetHeight;
+    var p = clamp((probe - top) / h);
+    // Hold the colour through a chapter, blend into the next over the last half screen before it.
+    var blend = cur === next ? 0 : ease(clamp((probe - (top + h - vh * 0.5)) / (vh * 0.5)));
+    root.style.setProperty('--bg', mix(cur.bg, next.bg, blend));
+    root.style.setProperty('--fg', rgb(blend < 0.5 ? cur.fg : next.fg));
+
+    var t = cur === next ? cur.t : cur.t + (next.t - cur.t) * p;
+    var mins = Math.round((t % 24) * 12) * 5;
+    var hh = Math.floor(mins / 60) % 24, mm = mins % 60;
+    clockTime.textContent = (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
+    clockLabel.textContent = cur.name;
+    clockFill.style.width = (clamp((t - start) / (end - start)) * 100) + '%';
+
+    if (!reduce) {
+      // Hero photo opens to full width as it rises into view.
+      var r = reveal.getBoundingClientRect();
+      root.style.setProperty('--reveal', ease(clamp((vh - r.top) / (vh * 0.9))).toFixed(3));
+      speeds.forEach(function (el) {
+        var b = el.getBoundingClientRect();
+        var off = (b.top + b.height / 2 - vh / 2) * parseFloat(el.dataset.speed);
+        el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+      });
+    }
+
+    if (!reduce) {
+      // Event photos slide sideways as the section passes.
+      var rb = reel.getBoundingClientRect();
+      var rp = clamp((vh - rb.top) / (vh + rb.height));
+      var travel = Math.max(0, reel.scrollWidth - reel.parentNode.clientWidth);
+      reel.style.transform = 'translate3d(' + (-travel * rp).toFixed(1) + 'px,0,0)';
+    }
+
+    var extraW = Math.max(0, track.scrollWidth - window.innerWidth);
+    var dp = extraW > 0 ? clamp((y - dine.offsetTop - dineHold()) / (extraW * SLOW)) : 0;
+    var shift = extraW * dp;
+    track.style.transform = 'translate3d(' + (-shift) + 'px,0,0)';
+    if (!reduce) {
+      // Photos drift inside their frames while the cards slide, for depth.
+      dishImgs.forEach(function (img, n) {
+        var c = img.parentNode.getBoundingClientRect();
+        var off = ((c.left + c.width / 2) / window.innerWidth - 0.5) * -28;
+        img.style.transform = 'translate3d(' + off.toFixed(1) + 'px,0,0) scale(1.12)';
+      });
+    }
+    // Count the card whose left edge is nearest the page margin; the last card once the row ends.
+    var n = track.children.length, idx = 1, best = Infinity, aim = track.children[0].offsetLeft;
+    for (var c2 = 0; c2 < n; c2++) {
+      var d = Math.abs(track.children[c2].getBoundingClientRect().left - aim);
+      if (d < best) { best = d; idx = c2 + 1; }
+    }
+    if (dp > 0.985) idx = n;
+    dineCount.textContent = (idx < 10 ? '0' : '') + idx + ' / ' + (n < 10 ? '0' : '') + n;
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; update(); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { sizeDine(); update(); });
+  window.addEventListener('load', function () { sizeDine(); update(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { sizeDine(); update(); });
+  sizeDine();
+  update();
+
+  // About opens only on request; any link to #about opens it first.
+  var about = document.getElementById('about');
+  var aboutToggle = document.getElementById('aboutToggle');
+  function setAbout(open) {
+    about.hidden = !open;
+    aboutToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (lenis) lenis.resize();
+    update();
+  }
+  aboutToggle.addEventListener('click', function () { setAbout(about.hidden); });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#about"]');
+    if (!a) return;
+    e.preventDefault(); e.stopPropagation();
+    if (!menu.hidden) setMenu(false);
+    setAbout(true);
+    requestAnimationFrame(function () {
+      if (lenis) lenis.scrollTo(about, { offset: -80 }); else about.scrollIntoView();
+    });
+  }, true);
+
+  // Count up guest numbers once they come into view.
+  var counters = [].slice.call(document.querySelectorAll('.count'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        var el = en.target, to = parseInt(el.dataset.to, 10), t0 = performance.now(), dur = 1200;
+        (function step(now) {
+          var p = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          el.textContent = v.toLocaleString('en-US');
+          if (p < 1) requestAnimationFrame(step);
+        })(t0);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { io.observe(el); });
+  }
+
+  // Small-screen menu
+  var menuBtn = document.getElementById('menuBtn');
+  var menu = document.getElementById('menu');
+  function setMenu(open) {
+    menu.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.textContent = open ? 'Close' : 'Menu';
+    if (lenis) { open ? lenis.stop() : lenis.start(); }
+  }
+  menuBtn.addEventListener('click', function () { setMenu(menu.hidden); });
+  [].slice.call(menu.querySelectorAll('a')).forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var target = document.querySelector(a.getAttribute('href'));
+      setMenu(false);
+      if (lenis) lenis.scrollTo(target, { offset: 0 }); else target.scrollIntoView();
+    });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
+
+})();
+</script>
+
+</body>
+</html>
