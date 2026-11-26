@@ -77,6 +77,12 @@ main section[id] { scroll-margin-top: 84px; }
 @media (max-width: 960px) { .bar .nav { display: none; } .menu-btn { display: inline-block; } }
 @media (min-width: 961px) { .menu { display: none !important; } }
 
+/* Back to top */
+.to-top { position: fixed; right: calc(var(--gutter-r) + 8px); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 18; width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid currentColor; background: var(--bg); color: var(--fg); display: grid; place-items: center; cursor: pointer; padding: 0; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease, visibility .25s; }
+.to-top.show { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { background: var(--fg); color: var(--bg); }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+
 /* Clock */
 .clock { position: fixed; left: 0; bottom: 0; z-index: 18; padding-left: calc(var(--gutter-l) + 8px); padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); color: var(--fg); pointer-events: none; mix-blend-mode: normal; }
 .clock-time { font-family: var(--mono); font-size: clamp(30px, 3.4vw, 44px); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1; }
@@ -293,6 +299,8 @@ main section[id] { scroll-margin-top: 84px; }
           </div>
   </div>
 </div>
+
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
 <div class="clock" aria-hidden="true">
   <div class="clock-time" id="clockTime">08:00</div>
@@ -659,8 +667,11 @@ main section[id] { scroll-margin-top: 84px; }
   }
 
   var start = 8, end = 28;
+  var toTop = document.getElementById('toTop');
+  toTop.addEventListener('click', function () { if (lenis) lenis.scrollTo(0); else window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
   function update() {
     var y = window.scrollY, vh = window.innerHeight, probe = y + vh * 0.5;
+    toTop.classList.toggle('show', y > vh * 0.6);
     var i = 0;
     for (var k = 0; k < stops.length; k++) { if (stops[k].el.offsetTop <= probe) i = k; }
     var cur = stops[i], next = stops[Math.min(i + 1, stops.length - 1)];
